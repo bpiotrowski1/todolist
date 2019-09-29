@@ -8,13 +8,22 @@
     <jsp:param name="active" value="1"/>
 </jsp:include>
 <%
+    String taskToDeleteUuid = request.getParameter("taskToDelete");
     List<Todo> todoList = (List<Todo>) session.getAttribute("todoList");
     if(todoList == null) {
         session.setAttribute("todoList", new ArrayList<>());
         response.setHeader("REFRESH", "0");
+    } else if(taskToDeleteUuid != null) {
+        for (Todo td : todoList) {
+            if(td.getUuid().equals(taskToDeleteUuid)) {
+                todoList.remove(td);
+                break;
+            }
+        }
+        response.sendRedirect("/");
     }
 
-    if(request.getParameter("description") != null) {
+    if(request.getParameter("description") != null && !request.getParameter("description").isEmpty()) {
         Todo todo = new Todo();
         todo.setDescription(request.getParameter("description"));
 
@@ -46,7 +55,11 @@
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="priority">Priority:</label>
-                <input name="priority" type="number" class="form-control col-sm-8" id="priority"/>
+                <select class="form-control col-sm-8" id="priority" name="priority">
+                    <option>High</option>
+                    <option>Normal</option>
+                    <option>Low</option>
+                </select>
             </div>
             <button class="btn btn-primary col-sm-3">Send</button>
         </form>
@@ -56,17 +69,29 @@
                 <th>Description</th>
                 <th>Finish date</th>
                 <th>Priority</th>
+                <th>Delete</th>
             </tr>
-            <%
-                for (Todo td: todoList) {
-                    out.print("<tr>");
-                    out.print("<td>" + td.getDescription() + "</td><td>" +
-                            (td.getFinishDate() == null ? "" : td.getFinishDate() ) + "</td><td>" +
-                            (td.getPriority() == null ? "" : td.getPriority()) + "</td><td>" +
-                            "<a href=\"/\">Delete task</a></td>");
-                    out.print("</td>");
-                }
-            %>
+            <c:if test="${todoList.size() > 0}">
+                <c:forEach var="sessionVar" items="${todoList}">
+                    <c:url var="deleteTask" value="/">
+                        <c:param name="taskToDelete" value="${sessionVar.getUuid()}"/>
+                    </c:url>
+                    <tr>
+                        <td>${sessionVar.getDescription()}</td>
+                        <td>
+                            <c:if test="${sessionVar.getFinishDate() != null}">
+                                ${sessionVar.getFinishDate()}
+                            </c:if>
+                        </td>
+                        <td>
+                            <c:if test="${sessionVar.getPriority() != null}">
+                                ${sessionVar.getPriority()}
+                            </c:if>
+                        </td>
+                        <td><a href="${deleteTask}">Delete task</a></td>
+                    </tr>
+                </c:forEach>
+            </c:if>
         </table>
     </p>
 </div>
