@@ -56,8 +56,13 @@
 
 .container {
     margin-top: 75px;
-    max-width: 42em;
+    max-width: 65em;
+    padding-right: 0;
     height: 89.5%;
+}
+
+hr {
+    width: 64em;
 }
 
 .btn {
