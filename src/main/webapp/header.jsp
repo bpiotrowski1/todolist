@@ -15,8 +15,8 @@
         <h3 class="masthead-brand"><a href="/">TODO LIST</a></h3>
         <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link<%= "1".equals(request.getParameter("active")) ? " active" : "" %>" href="/">Main page</a>
-            <a class="nav-link" href="/?lang=pl_PL"><fmt:message key="language.polish" bundle="${languages}"/></a>
-            <a class="nav-link" href="/?lang=en_GB"><fmt:message key="language.english" bundle="${languages}"/></a>
+            <a class="nav-link" href="todos?lang=pl_PL"><fmt:message key="language.polish" bundle="${languages}"/></a>
+            <a class="nav-link" href="todos?lang=en_GB"><fmt:message key="language.english" bundle="${languages}"/></a>
         </nav>
     </div>
 </header>

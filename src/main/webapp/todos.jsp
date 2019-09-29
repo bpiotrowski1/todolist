@@ -1,11 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="pl.bpiotrowski.Todo" %>
-<%@ page import="java.time.LocalDateTime" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
 
 <fmt:setLocale value="${empty cookie.lang ? pageContext.response.locale : cookie.lang.value}"/>
 <fmt:setBundle basename="todo"/>
@@ -13,50 +8,11 @@
 <jsp:include page="header.jsp">
     <jsp:param name="active" value="1"/>
 </jsp:include>
-<%
-    if(request.getParameter("lang") != null && !request.getParameter("lang").isEmpty()) {
-        Cookie cookie = new Cookie("lang", request.getParameter("lang"));
-        cookie.setMaxAge(60 * 60 * 24 * 365);
-        response.addCookie(cookie);
-        response.sendRedirect("/");
-    }
-
-    String taskToDeleteUuid = request.getParameter("taskToDelete");
-    List<Todo> todoList = (List<Todo>) session.getAttribute("todoList");
-    if(todoList == null) {
-        session.setAttribute("todoList", new ArrayList<>());
-        response.sendRedirect("/");
-    } else if(taskToDeleteUuid != null) {
-        for (Todo td : todoList) {
-            if(td.getUuid().equals(taskToDeleteUuid)) {
-                todoList.remove(td);
-                break;
-            }
-        }
-        response.sendRedirect("/");
-    }
-
-    if(request.getParameter("description") != null && !request.getParameter("description").isEmpty()) {
-        Todo todo = new Todo();
-        todo.setDescription(request.getParameter("description"));
-
-        String date = request.getParameter("finishDate");
-        if(date != null && !date.isEmpty()) {
-            LocalDateTime finishDate = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME);
-            todo.setFinishDate(finishDate);
-        }
-        if(request.getParameter("priority") != null && !request.getParameter("priority").isEmpty()) {
-            todo.setPriority(request.getParameter("priority"));
-        }
-        todoList.add(todo);
-        response.sendRedirect("/");
-    }
-%>
 <div class="container">
     <h1><fmt:message key="todo.add.task"/></h1>
     <hr/>
     <p>
-        <form action="?" method="post">
+        <form action="todos" method="post">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="description"><fmt:message key="todo.description"/>:</label>
                 <input name="description" type="text" class="form-control col-sm-8" id="description"/>
