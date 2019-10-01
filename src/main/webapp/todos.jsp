@@ -45,7 +45,7 @@
                 </thead>
                 <c:if test="${todoList.size() > 0}">
                     <c:forEach var="task" items="${todoList}">
-                        <c:url var="deleteTask" value="/">
+                        <c:url var="deleteTask" value="/todos">
                             <c:param name="taskToDelete" value="${task.getUuid()}"/>
                         </c:url>
                         <tr>

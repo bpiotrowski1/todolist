@@ -1,13 +1,10 @@
-package pl.bpiotrowski.pl.bpiotrowski.servlet;
+package pl.bpiotrowski.servlet;
 
-import pl.bpiotrowski.Todo;
+import pl.bpiotrowski.entity.Todo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,25 +15,21 @@ import java.util.List;
 public class TodoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String taskToDeleteUuid = req.getParameter("taskToDelete");
-        List<Todo> todoList = (List<Todo>) req.getSession().getAttribute("todoList");
-        if(todoList == null) {
-            req.getSession().setAttribute("todoList", new ArrayList<>());
-        } else if(taskToDeleteUuid != null) {
-            for (Todo td : todoList) {
-                if(td.getUuid().equals(taskToDeleteUuid)) {
-                    todoList.remove(td);
-                    break;
-                }
-            }
+        HttpSession session = req.getSession();
+
+        if(session.getAttribute("todoList") == null) {
+            List<Todo> todoList = new ArrayList<>();
+            session.setAttribute("todoList", todoList);
         }
 
-        if(req.getParameter("lang") != null && !req.getParameter("lang").isEmpty()) {
-            Cookie cookie = new Cookie("lang", req.getParameter("lang"));
+        String lang = req.getParameter("lang");
+        if(lang != null) {
+            Cookie cookie = new Cookie("lang", lang);
             cookie.setMaxAge(60 * 60 * 24 * 365);
             resp.addCookie(cookie);
+            resp.sendRedirect("todos");
+            return;
         }
-
         req.getRequestDispatcher("todos.jsp").forward(req, resp);
     }
 

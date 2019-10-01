@@ -1,4 +1,4 @@
-package pl.bpiotrowski;
+package pl.bpiotrowski.entity;
 
 import lombok.Data;
 
