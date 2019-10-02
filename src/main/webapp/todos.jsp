@@ -15,7 +15,7 @@
         <form action="todos" method="post">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="description"><fmt:message key="todo.description"/>:</label>
-                <input name="description" type="text" class="form-control col-sm-8" id="description"/>
+                <input name="description" type="text" class="form-control col-sm-8" id="description" placeholder="${taskToUpdate}"/>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="finishDate"><fmt:message key="todo.finish.date"/>:</label>
@@ -42,11 +42,15 @@
                     <th>Finish date</th>
                     <th>Priority</th>
                     <th>Delete</th>
+                    <th>Update</th>
                 </thead>
                 <c:if test="${todoList.size() > 0}">
                     <c:forEach var="task" items="${todoList}">
                         <c:url var="deleteTask" value="/todos">
                             <c:param name="taskToDelete" value="${task.getUuid()}"/>
+                        </c:url>
+                        <c:url var="updateTask" value="/update">
+                            <c:param name="taskToUpdate" value="${task.getUuid()}"/>
                         </c:url>
                         <tr>
                             <td>${task.getDescription()}</td>
@@ -61,6 +65,7 @@
                                 </c:if>
                             </td>
                             <td><a href="${deleteTask}">Delete task</a></td>
+                            <td><a href="${updateTask}">Update task</a></td>
                         </tr>
                     </c:forEach>
                 </c:if>

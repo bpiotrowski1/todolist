@@ -37,7 +37,8 @@ public class TodoController extends HttpServlet {
                 for (Todo td : todoList) {
                     if (td.getUuid().equals(taskToDeleteUuid)) {
                         todoList.remove(td);
-                        break;
+                        resp.sendRedirect("todos");
+                        return;
                     }
                 }
             }
@@ -63,6 +64,6 @@ public class TodoController extends HttpServlet {
             }
             todoList.add(todo);
         }
-        req.getRequestDispatcher("todos.jsp").forward(req, resp);
+        resp.sendRedirect("todos");
     }
 }
