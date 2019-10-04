@@ -44,6 +44,20 @@ public class TodoController extends HttpServlet {
             }
         }
 
+        String tasktoUpdateUuid = req.getParameter("taskToUpdate");
+        if(tasktoUpdateUuid != null) {
+            List<Todo> todoList = (List<Todo>) req.getSession().getAttribute("todoList");
+            if(todoList != null) {
+                for (Todo td : todoList) {
+                    if (td.getUuid().equals(tasktoUpdateUuid)) {
+                        session.setAttribute("task", td);
+                        resp.sendRedirect("todos");
+                        return;
+                    }
+                }
+            }
+        }
+
         req.getRequestDispatcher("todos.jsp").forward(req, resp);
     }
 
@@ -62,6 +76,12 @@ public class TodoController extends HttpServlet {
             if(req.getParameter("priority") != null && !req.getParameter("priority").isEmpty()) {
                 todo.setPriority(req.getParameter("priority"));
             }
+
+            if(todoList.contains(req.getSession().getAttribute("task"))) {
+                todoList.remove(req.getSession().getAttribute("task"));
+                req.getSession().removeAttribute("task");
+            }
+
             todoList.add(todo);
         }
         resp.sendRedirect("todos");
