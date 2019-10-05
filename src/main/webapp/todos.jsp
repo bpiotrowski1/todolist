@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:setLocale value="${empty cookie.lang ? pageContext.response.locale : cookie.lang.value}"/>
 <fmt:setBundle basename="todo"/>
@@ -15,18 +16,18 @@
         <form action="todos" method="post">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="description"><fmt:message key="todo.description"/>:</label>
-                <input name="description" type="text" class="form-control col-sm-8" id="description" value="${task.getDescription()}"/>
+                <input name="description" type="text" class="form-control col-sm-8" id="description"/>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="finishDate"><fmt:message key="todo.finish.date"/>:</label>
-                <input name="finishDate" type="datetime-local" class="form-control col-sm-8" id="finishDate" value="${task.getFinishDate()}"/>
+                <input name="finishDate" type="datetime-local" class="form-control col-sm-8" id="finishDate"/>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="priority"><fmt:message key="todo.priority"/>:</label>
                 <select class="form-control col-sm-8" id="priority" name="priority">
-                    <option value="HIGH" ${task.getPriority().equals("HIGH") ? "selected" : ""}><fmt:message key="todo.priority.high"/></option>
-                    <option value="NORMAL" ${task.getPriority().equals("NORMAL") or task.getPriority().equals("LOW") == null ? "selected" : ""}><fmt:message key="todo.priority.normal"/></option>
-                    <option value="LOW" ${task.getPriority().equals("LOW") ? "selected" : ""}><fmt:message key="todo.priority.low"/></option>
+                    <option value="HIGH"><fmt:message key="todo.priority.high"/></option>
+                    <option value="NORMAL" selected><fmt:message key="todo.priority.normal"/></option>
+                    <option value="LOW"><fmt:message key="todo.priority.low"/></option>
                 </select>
             </div>
             <button class="btn btn-primary col-sm-3"><fmt:message key="todo.save"/></button>
@@ -38,11 +39,11 @@
         <p>
             <table class="table table-hover">
                 <thead class="thead-dark">
-                    <th>Description</th>
-                    <th>Finish date</th>
-                    <th>Priority</th>
-                    <th>Delete</th>
-                    <th>Update</th>
+                    <th><fmt:message key="todo.description"/></th>
+                    <th><fmt:message key="todo.finish.date"/></th>
+                    <th><fmt:message key="todo.priority"/></th>
+                    <th><fmt:message key="todo.delete.task"/></th>
+                    <th><fmt:message key="todo.edit.task"/></th>
                 </thead>
                 <c:if test="${todoList.size() > 0}">
                     <c:forEach var="task" items="${todoList}">
@@ -61,11 +62,11 @@
                             </td>
                             <td>
                                 <c:if test="${task.getPriority() != null}">
-                                    ${task.getPriority()}
+                                    <fmt:message key="todo.priority.${fn:toLowerCase(task.getPriority())}"/>
                                 </c:if>
                             </td>
-                            <td><a href="${deleteTask}">Delete task</a></td>
-                            <td><a href="${updateTask}">Update task</a></td>
+                            <td><a href="${deleteTask}"><fmt:message key="todo.delete"/></a></td>
+                            <td><a href="${updateTask}"><fmt:message key="todo.edit"/></a></td>
                         </tr>
                     </c:forEach>
                 </c:if>

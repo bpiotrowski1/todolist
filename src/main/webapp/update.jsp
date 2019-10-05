@@ -9,7 +9,7 @@
     <jsp:param name="active" value="1"/>
 </jsp:include>
 <div class="container">
-    <h1><fmt:message key="todo.update.task"/></h1>
+    <h1><fmt:message key="todo.edit.task"/></h1>
     <hr/>
     <p>
         <form action="todos" method="post">
@@ -30,6 +30,7 @@
                 </select>
             </div>
             <button class="btn btn-primary col-sm-3"><fmt:message key="todo.save"/></button>
+            <!-- <button class="btn btn-primary col-sm-3"><fmt:message key="todo.cancel"/></button>-->
         </form>
     </p>
 </div>
