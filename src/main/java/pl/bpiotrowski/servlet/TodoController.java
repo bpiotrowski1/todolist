@@ -1,5 +1,7 @@
 package pl.bpiotrowski.servlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.bpiotrowski.entity.Todo;
 
 import javax.servlet.ServletException;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @WebServlet("/todos")
 public class TodoController extends HttpServlet {
+    private static Logger log = LoggerFactory.getLogger(TodoController.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -55,6 +59,7 @@ public class TodoController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Todo> todoList = (List<Todo>) req.getSession().getAttribute("todoList");
         if(req.getParameter("description") != null && !req.getParameter("description").isEmpty()) {
+            log.debug("Creating todo task " + req.getParameter("description"));
             Todo todo = new Todo();
             todo.setDescription(req.getParameter("description"));
 
