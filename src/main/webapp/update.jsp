@@ -9,7 +9,7 @@
     <jsp:param name="active" value="1"/>
 </jsp:include>
 <div class="container">
-    <h1><fmt:message key="todo.add.task"/></h1>
+    <h1><fmt:message key="todo.update.task"/></h1>
     <hr/>
     <p>
         <form action="todos" method="post">
@@ -32,45 +32,5 @@
             <button class="btn btn-primary col-sm-3"><fmt:message key="todo.save"/></button>
         </form>
     </p>
-    <br/><br/>
-    <c:if test="${todoList.size() > 0}">
-        <hr/>
-        <p>
-            <table class="table table-hover">
-                <thead class="thead-dark">
-                    <th>Description</th>
-                    <th>Finish date</th>
-                    <th>Priority</th>
-                    <th>Delete</th>
-                    <th>Update</th>
-                </thead>
-                <c:if test="${todoList.size() > 0}">
-                    <c:forEach var="task" items="${todoList}">
-                        <c:url var="deleteTask" value="/todos">
-                            <c:param name="taskToDelete" value="${task.getUuid()}"/>
-                        </c:url>
-                        <c:url var="updateTask" value="/update">
-                            <c:param name="taskToUpdate" value="${task.getUuid()}"/>
-                        </c:url>
-                        <tr>
-                            <td>${task.getDescription()}</td>
-                            <td>
-                                <c:if test="${task.getFinishDate() != null}">
-                                    ${task.getFinishDate()}
-                                </c:if>
-                            </td>
-                            <td>
-                                <c:if test="${task.getPriority() != null}">
-                                    ${task.getPriority()}
-                                </c:if>
-                            </td>
-                            <td><a href="${deleteTask}">Delete task</a></td>
-                            <td><a href="${updateTask}">Update task</a></td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-            </table>
-        </p>
-    </c:if>
 </div>
 <%@ include file="footer.jsp"%>
