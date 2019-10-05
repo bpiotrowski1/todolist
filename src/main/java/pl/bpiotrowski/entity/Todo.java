@@ -14,17 +14,11 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String uuid;
     private String description;
     private LocalDateTime finishDate;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
-
-    public Todo() {
-        UUID ui = UUID.randomUUID();
-        this.uuid = ui.toString();
-    }
 
     @Override
     public String toString() {
