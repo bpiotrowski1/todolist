@@ -24,8 +24,8 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="priority"><fmt:message key="todo.priority"/>:</label>
                 <select class="form-control col-sm-8" id="priority" name="priority">
-                    <option value="HIGH" ${task.getPriority().equals("HIGH") ? "selected" : ""}><fmt:message key="todo.priority.high"/></option>
-                    <option value="NORMAL" ${task.getPriority().equals("NORMAL") or task.getPriority().equals("LOW") == null ? "selected" : ""}><fmt:message key="todo.priority.normal"/></option>
+                    <!--option value="HIGH" ${task.getPriority().equals("HIGH") ? "selected" : ""}><fmt:message key="todo.priority.high"/></option-->
+                    <option value="NORMAL" ${task.getPriority().equals("NORMAL") or task.getPriority() == null ? "selected" : ""}><fmt:message key="todo.priority.normal"/></option>
                     <option value="LOW" ${task.getPriority().equals("LOW") ? "selected" : ""}><fmt:message key="todo.priority.low"/></option>
                 </select>
             </div>

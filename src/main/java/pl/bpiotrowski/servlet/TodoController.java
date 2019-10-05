@@ -2,6 +2,7 @@ package pl.bpiotrowski.servlet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.bpiotrowski.entity.Priority;
 import pl.bpiotrowski.entity.Todo;
 
 import javax.servlet.ServletException;
@@ -69,7 +70,8 @@ public class TodoController extends HttpServlet {
                 todo.setFinishDate(finishDate);
             }
             if(req.getParameter("priority") != null && !req.getParameter("priority").isEmpty()) {
-                todo.setPriority(req.getParameter("priority"));
+                Priority priority = Priority.valueOf(req.getParameter("priority").toUpperCase());
+                todo.setPriority(priority);
             }
 
             if(todoList.contains(req.getSession().getAttribute("task"))) {
