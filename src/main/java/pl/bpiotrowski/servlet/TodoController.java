@@ -59,6 +59,7 @@ public class TodoController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Todo> todoList = (List<Todo>) req.getSession().getAttribute("todoList");
         if(req.getParameter("description") != null && !req.getParameter("description").isEmpty()) {
+            log.debug("Creating todo task " + req.getParameter("description"));
             Todo todo = new Todo();
             todo.setDescription(req.getParameter("description"));
 
