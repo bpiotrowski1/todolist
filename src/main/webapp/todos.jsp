@@ -34,7 +34,7 @@
         </form>
     </p>
     <br/><br/>
-    <c:if test="${todoList.size() > 0}">
+    <c:if test="${requestScope.todos.size() > 0}">
         <hr/>
         <p>
             <table class="table table-hover">
@@ -45,31 +45,29 @@
                     <th><fmt:message key="todo.delete.task"/></th>
                     <th><fmt:message key="todo.edit.task"/></th>
                 </thead>
-                <c:if test="${todoList.size() > 0}">
-                    <c:forEach var="task" items="${todoList}">
-                        <c:url var="deleteTask" value="/todos">
-                            <c:param name="taskToDelete" value="${task.getUuid()}"/>
-                        </c:url>
-                        <c:url var="updateTask" value="/update">
-                            <c:param name="taskToUpdate" value="${task.getUuid()}"/>
-                        </c:url>
-                        <tr>
-                            <td>${task.getDescription()}</td>
-                            <td>
-                                <c:if test="${task.getFinishDate() != null}">
-                                    ${task.getFinishDate()}
-                                </c:if>
-                            </td>
-                            <td>
-                                <c:if test="${task.getPriority() != null}">
-                                    <fmt:message key="todo.priority.${fn:toLowerCase(task.getPriority())}"/>
-                                </c:if>
-                            </td>
-                            <td><a href="${deleteTask}"><fmt:message key="todo.delete"/></a></td>
-                            <td><a href="${updateTask}"><fmt:message key="todo.edit"/></a></td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
+                <c:forEach var="task" items="${requestScope.todos}">
+                    <c:url var="deleteTask" value="/todos">
+                        <c:param name="taskToDelete" value="${task.getId()}"/>
+                    </c:url>
+                    <c:url var="updateTask" value="/update">
+                        <c:param name="taskToUpdate" value="${task.getId()}"/>
+                    </c:url>
+                    <tr>
+                        <td>${task.getDescription()}</td>
+                        <td>
+                            <c:if test="${task.getFinishDate() != null}">
+                                ${task.getFinishDate()}
+                            </c:if>
+                        </td>
+                        <td>
+                            <c:if test="${task.getPriority() != null}">
+                                <fmt:message key="todo.priority.${fn:toLowerCase(task.getPriority())}"/>
+                            </c:if>
+                        </td>
+                        <td><a href="${deleteTask}"><fmt:message key="todo.delete"/></a></td>
+                        <td><a href="${updateTask}"><fmt:message key="todo.edit"/></a></td>
+                    </tr>
+                </c:forEach>
             </table>
         </p>
     </c:if>

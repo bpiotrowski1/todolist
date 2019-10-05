@@ -15,18 +15,18 @@
         <form action="todos" method="post">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="description"><fmt:message key="todo.description"/>:</label>
-                <input name="description" type="text" class="form-control col-sm-8" id="description" value="${task.getDescription()}"/>
+                <input name="description" type="text" class="form-control col-sm-8" id="description" value="${requestScope.todo.getDescription()}"/>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="finishDate"><fmt:message key="todo.finish.date"/>:</label>
-                <input name="finishDate" type="datetime-local" class="form-control col-sm-8" id="finishDate" value="${task.getFinishDate()}"/>
+                <input name="finishDate" type="datetime-local" class="form-control col-sm-8" id="finishDate" value="${requestScope.todo.getFinishDate()}"/>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="priority"><fmt:message key="todo.priority"/>:</label>
                 <select class="form-control col-sm-8" id="priority" name="priority">
-                    <option value="HIGH" ${task.getPriority().equals("HIGH") ? "selected" : ""}><fmt:message key="todo.priority.high"/></option>
-                    <option value="NORMAL" ${task.getPriority().equals("NORMAL") or task.getPriority().equals("LOW") == null ? "selected" : ""}><fmt:message key="todo.priority.normal"/></option>
-                    <option value="LOW" ${task.getPriority().equals("LOW") ? "selected" : ""}><fmt:message key="todo.priority.low"/></option>
+                    <option value="HIGH" ${requestScope.todo.getPriority().equals("HIGH") ? "selected" : ""}><fmt:message key="todo.priority.high"/></option>
+                    <option value="NORMAL" ${requestScope.todo.getPriority().equals("NORMAL") or requestScope.todo.getPriority() == null ? "selected" : ""}><fmt:message key="todo.priority.normal"/></option>
+                    <option value="LOW" ${requestScope.todo.getPriority().equals("LOW") ? "selected" : ""}><fmt:message key="todo.priority.low"/></option>
                 </select>
             </div>
             <button class="btn btn-primary col-sm-3"><fmt:message key="todo.save"/></button>
