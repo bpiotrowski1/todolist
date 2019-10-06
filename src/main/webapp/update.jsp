@@ -15,7 +15,7 @@
         <form action="todos" method="post">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="description"><fmt:message key="todo.description"/>:</label>
-                <input name="description" type="text" class="form-control col-sm-8" id="description" value="${requestScope.todo.getDescription()}"/>
+                <input name="description" type="text" class="form-control col-sm-8" id="description" value="${sessionScope.task.getDescription()}"/>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label" for="finishDate"><fmt:message key="todo.finish.date"/>:</label>
